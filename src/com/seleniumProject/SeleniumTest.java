@@ -20,6 +20,18 @@ public class SeleniumTest {
         this.driver.get("G:\\lesson\\Software Test\\Project\\SeleniumProject\\src\\com\\seleniumProject\\cv.html");
     }
 
+    //------------------------------------  1  ---------------------------------------
+    public void tableHeaders(){
+        List<WebElement> tables = driver.findElements(By.tagName("table"));
+        for(WebElement table :tables){
+            if(table.findElements(By.xpath("//th")).size()==0){
+                System.out.println("tables must have headers");
+            }
+        }
+    }
+
+
+
 
     public void testHtmlHaveLangAttribute() {
         WebElement html = driver.findElement(By.tagName("html"));
@@ -32,7 +44,62 @@ public class SeleniumTest {
     }
 
 
+    //------------------------------------  3  ---------------------------------------
+    public void pageHasTitle(){
+    boolean titleExists = driver.findElements( By.tagName("title") ).size() != 0;
+    if(!titleExists){System.out.println("title not found");}
+    }
 
+
+    //------------------------------------  5  ----------------------------------------
+    public void imageHeightWidth(){
+        int imagesNum = driver.findElements(By.xpath("//img")).size();
+        int imagesWidthNum = driver.findElements(By.xpath("//img[@width]")).size();
+        int imagesHeightNum = driver.findElements(By.xpath("//img[@width]")).size();
+            if(imagesNum>imagesHeightNum){
+            System.out.println("All images must have height atrribute");
+        }
+            if(imagesNum>imagesWidthNum){
+            System.out.println("All images must have width atrribute");
+        }
+    }
+
+
+    //---------------------------------------  7  ------------------------------------
+    public void checkLabel() {
+
+        // get all "for" attributes of labales
+        List<WebElement> labels = driver.findElements(By.tagName("label"));
+        List<String> labelfors = new ArrayList<>();
+        System.out.println(labels.size());
+        for (WebElement WE : labels) {
+            labelfors.add(WE.getAttribute("for"));
+        }
+        // get all elements needing label: input, select, textarea
+        List<WebElement> inputs = driver.findElements(By.tagName("input"));
+        List<WebElement> selects = driver.findElements(By.tagName("selects"));
+        List<WebElement> textareas = driver.findElements(By.tagName("textareas"));
+        List<WebElement> list = new ArrayList<>();
+        list.addAll(inputs);
+        list.addAll(selects);
+        list.addAll(textareas);
+
+
+        // checks compliance
+        for (WebElement i : list) {
+            if (i.getAttribute("aria-label") != "" || i.getAttribute("aria-labelledby") != "") {
+                continue;
+            }
+            if (i.getAttribute("id").equals("")) {
+                System.out.println("element is missing required attribute id");
+                continue;
+            }
+            String id = i.getAttribute("id");
+            if (!labelfors.contains(id)) {
+                System.out.println("element must have label");
+            }
+        }
+    }
     /////////////////////////////////firt remove table that have figure Tag/////////////////////////////////
     public void tabeDescription() {
         int tableCount=0;
