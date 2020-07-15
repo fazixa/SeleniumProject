@@ -14,10 +14,12 @@ import java.util.List;
  */
 public class SeleniumTest {
     private static WebDriver driver;
+    private static String url = "G:\\lesson\\Software Test\\Project\\SeleniumProject\\src\\com\\seleniumProject\\cv.html";
     public SeleniumTest() {
         System.setProperty("webdriver.chrome.driver", "chromeDriver/chromedriver.exe");
         this.driver = new ChromeDriver();
-        this.driver.get("G:\\lesson\\Software Test\\Project\\SeleniumProject\\src\\com\\seleniumProject\\cv.html");
+
+        this.driver.get(url);
     }
 
     //------------------------------------  1  ---------------------------------------
@@ -33,6 +35,8 @@ public class SeleniumTest {
 
     //------------------------------------  2  ---------------------------------------
 
+
+
     public void testHtmlHaveLangAttribute() {
         WebElement html = driver.findElement(By.tagName("html"));
         String langValue = html.getAttribute("lang");
@@ -44,17 +48,48 @@ public class SeleniumTest {
 
 
     //------------------------------------  3  ---------------------------------------
-    public void pageHasTitle(){
-    boolean titleExists = driver.findElements( By.tagName("title") ).size() != 0;
-    if(!titleExists){System.out.println("title not found");}
-    }
+//    public void pageHasTitle(){
+//    boolean titleExists = driver.findElements( By.tagName("title") ).size() != 0;
+//    if(!titleExists){System.out.println("title not found");}
+//    }
 
+
+
+    public void pageHasTitle() {
+
+
+        boolean titleExists = driver.findElements(By.tagName("title")).size() != 0;
+        if (!titleExists) {
+            System.out.println("title not found");
+
+            List<WebElement> links = driver.findElements(By.tagName("a"));
+            int linkCount = links.size();
+            for (int i = 0; i < linkCount; i++) {
+
+                WebElement link = links.get(i);
+                String href = link.getAttribute("href");
+                if (href != null) {
+                    if (href.startsWith("/")) {
+                        href = url + href;
+                    }
+                    driver.navigate().to(href);
+                    boolean linktitleExists = driver.findElements(By.tagName("title")).size() != 0;
+                    if (!linktitleExists) {
+                        System.out.println(href + " has no title");
+                    }
+                    driver.navigate().back();
+                }
+
+            }
+        }
+    }
 
     //------------------------------------  5  ----------------------------------------
     public void imageHeightWidth(){
         int imagesNum = driver.findElements(By.xpath("//img")).size();
         int imagesWidthNum = driver.findElements(By.xpath("//img[@width]")).size();
         int imagesHeightNum = driver.findElements(By.xpath("//img[@width]")).size();
+        String k = driver.findElements(By.xpath("//img[@width]")).toString();
             if(imagesNum>imagesHeightNum){
             System.out.println("All images must have height atrribute");
         }
