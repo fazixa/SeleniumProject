@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SeleniumTest {
     private static WebDriver driver;
-    private static String url = "G:\\lesson\\Software Test\\Project\\SeleniumProject\\src\\com\\seleniumProject\\cv.html";
+    private static String url = "F:\\Current Sem\\Software Testing\\project\\cv.html";
     public SeleniumTest() {
         System.setProperty("webdriver.chrome.driver", "chromeDriver/chromedriver.exe");
         this.driver = new ChromeDriver();
@@ -59,19 +59,19 @@ public class SeleniumTest {
 
 
         boolean titleExists = driver.findElements(By.tagName("title")).size() != 0;
-        if (!titleExists) {
-            System.out.println("title not found");
+        if (!titleExists) System.out.println("title not found");
 
             List<WebElement> links = driver.findElements(By.tagName("a"));
-            int linkCount = links.size();
-            for (int i = 0; i < linkCount; i++) {
 
-                WebElement link = links.get(i);
+            for (WebElement link : links) {
+
+
                 String href = link.getAttribute("href");
                 if (href != null) {
-                    if (href.startsWith("/")) {
-                        href = url + href;
-                    }
+//                    if (href.startsWith("/")) {
+//                        href = url + href;
+//                    }
+//                    System.out.println(href);
                     driver.navigate().to(href);
                     boolean linktitleExists = driver.findElements(By.tagName("title")).size() != 0;
                     if (!linktitleExists) {
@@ -82,7 +82,7 @@ public class SeleniumTest {
 
             }
         }
-    }
+
 
     //------------------------------------  5  ----------------------------------------
     public void imageHeightWidth(){

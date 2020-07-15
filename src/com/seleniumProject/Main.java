@@ -60,7 +60,7 @@ public class Main {
 
 
             if (choose == 2) {
-                try (BufferedReader in = new BufferedReader(new FileReader("G:\\lesson\\Software Test\\Project\\SeleniumProject\\input.txt"))) {
+                try (BufferedReader in = new BufferedReader(new FileReader("input.txt"))) {
                     String str;
                     SemanticRelatedness sr = new SemanticRelatedness();
                     while ((str = in.readLine()) != null) {
