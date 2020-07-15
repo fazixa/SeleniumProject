@@ -36,7 +36,6 @@ public class SeleniumTest {
     public void testHtmlHaveLangAttribute() {
         WebElement html = driver.findElement(By.tagName("html"));
         String langValue = html.getAttribute("lang");
-        //System.out.println(langValue);
         boolean condition = langValue != null && !langValue.trim().isEmpty();
         if (!condition) {
             System.out.println("Html tag doesn't have language attribute");
